@@ -20,6 +20,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
     super.initState();
 
     templeNotifier.getAllTemple();
+
+    templeLatLngNotifier.getAllTempleLatLng();
   }
 
   ///
