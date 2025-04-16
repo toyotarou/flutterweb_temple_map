@@ -19,9 +19,7 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Text(
-              (appParamState.selectedIndex >= 0) ? appParamState.itemList[appParamState.selectedIndex] : '',
-            ),
+            Text(appParamState.selectedDate),
           ],
         ),
       ),

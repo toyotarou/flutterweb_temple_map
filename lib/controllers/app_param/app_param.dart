@@ -8,8 +8,7 @@ part 'app_param.g.dart';
 @freezed
 class AppParamState with _$AppParamState {
   const factory AppParamState({
-    @Default(<String>[]) List<String> itemList,
-    @Default(-1) int selectedIndex,
+    @Default('') String selectedDate,
   }) = _AppParamState;
 }
 
@@ -17,11 +16,8 @@ class AppParamState with _$AppParamState {
 class AppParamController extends _$AppParamController {
   ///
   @override
-  AppParamState build() {
-    // ignore: always_specify_types
-    return AppParamState(itemList: List.generate(100, (int index) => 'item-$index'));
-  }
+  AppParamState build() => const AppParamState();
 
   ///
-  void setSelectedIndex({required int index}) => state = state.copyWith(selectedIndex: index);
+  void setSelectedDate({required String date}) => state = state.copyWith(selectedDate: date);
 }

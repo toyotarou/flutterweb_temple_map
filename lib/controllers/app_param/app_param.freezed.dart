@@ -16,8 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppParamState {
-  List<String> get itemList => throw _privateConstructorUsedError;
-  int get selectedIndex => throw _privateConstructorUsedError;
+  String get selectedDate => throw _privateConstructorUsedError;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +31,7 @@ abstract class $AppParamStateCopyWith<$Res> {
           AppParamState value, $Res Function(AppParamState) then) =
       _$AppParamStateCopyWithImpl<$Res, AppParamState>;
   @useResult
-  $Res call({List<String> itemList, int selectedIndex});
+  $Res call({String selectedDate});
 }
 
 /// @nodoc
@@ -50,18 +49,13 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? itemList = null,
-    Object? selectedIndex = null,
+    Object? selectedDate = null,
   }) {
     return _then(_value.copyWith(
-      itemList: null == itemList
-          ? _value.itemList
-          : itemList // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndex: null == selectedIndex
-          ? _value.selectedIndex
-          : selectedIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      selectedDate: null == selectedDate
+          ? _value.selectedDate
+          : selectedDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -74,7 +68,7 @@ abstract class _$$AppParamStateImplCopyWith<$Res>
       __$$AppParamStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> itemList, int selectedIndex});
+  $Res call({String selectedDate});
 }
 
 /// @nodoc
@@ -90,18 +84,13 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? itemList = null,
-    Object? selectedIndex = null,
+    Object? selectedDate = null,
   }) {
     return _then(_$AppParamStateImpl(
-      itemList: null == itemList
-          ? _value._itemList
-          : itemList // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndex: null == selectedIndex
-          ? _value.selectedIndex
-          : selectedIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      selectedDate: null == selectedDate
+          ? _value.selectedDate
+          : selectedDate // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -109,26 +98,15 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AppParamStateImpl implements _AppParamState {
-  const _$AppParamStateImpl(
-      {final List<String> itemList = const [], this.selectedIndex = -1})
-      : _itemList = itemList;
-
-  final List<String> _itemList;
-  @override
-  @JsonKey()
-  List<String> get itemList {
-    if (_itemList is EqualUnmodifiableListView) return _itemList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_itemList);
-  }
+  const _$AppParamStateImpl({this.selectedDate = ''});
 
   @override
   @JsonKey()
-  final int selectedIndex;
+  final String selectedDate;
 
   @override
   String toString() {
-    return 'AppParamState(itemList: $itemList, selectedIndex: $selectedIndex)';
+    return 'AppParamState(selectedDate: $selectedDate)';
   }
 
   @override
@@ -136,14 +114,12 @@ class _$AppParamStateImpl implements _AppParamState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppParamStateImpl &&
-            const DeepCollectionEquality().equals(other._itemList, _itemList) &&
-            (identical(other.selectedIndex, selectedIndex) ||
-                other.selectedIndex == selectedIndex));
+            (identical(other.selectedDate, selectedDate) ||
+                other.selectedDate == selectedDate));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_itemList), selectedIndex);
+  int get hashCode => Object.hash(runtimeType, selectedDate);
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -155,14 +131,11 @@ class _$AppParamStateImpl implements _AppParamState {
 }
 
 abstract class _AppParamState implements AppParamState {
-  const factory _AppParamState(
-      {final List<String> itemList,
-      final int selectedIndex}) = _$AppParamStateImpl;
+  const factory _AppParamState({final String selectedDate}) =
+      _$AppParamStateImpl;
 
   @override
-  List<String> get itemList;
-  @override
-  int get selectedIndex;
+  String get selectedDate;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
