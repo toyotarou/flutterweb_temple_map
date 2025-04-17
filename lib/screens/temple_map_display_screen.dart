@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,14 +21,6 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
   List<TempleData> templeDataList = <TempleData>[];
 
   List<Marker> markerList = <Marker>[];
-
-  List<double> latList = <double>[];
-  List<double> lngList = <double>[];
-
-  double minLat = 0.0;
-  double maxLat = 0.0;
-  double minLng = 0.0;
-  double maxLng = 0.0;
 
   bool isLoading = false;
 
@@ -65,11 +55,11 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
           children: <Widget>[
             Text(appParamState.selectedDate),
             SizedBox(
-              height: context.screenSize.height * 0.5,
+              height: context.screenSize.height * 0.7,
               child: FlutterMap(
                   mapController: mapController,
                   options: MapOptions(
-                    initialCenter: const LatLng(35.718532, 139.586639),
+                    initialCenter: mapCenter,
                     initialZoom: currentZoomEightTeen,
                     onPositionChanged: (MapCamera position, bool isMoving) {
                       if (isMoving) {
@@ -132,9 +122,6 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
 
   ///
   void makeMarker() {
-    latList = <double>[];
-    lngList = <double>[];
-
     markerList = <Marker>[];
 
     final List<TempleModel> dateData = templeState.templeList
@@ -166,45 +153,16 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
               ),
               width: 40,
               height: 40,
-              child: const CircleAvatar(),
+              child: CircleAvatar(
+                backgroundColor: Colors.blueAccent.withOpacity(0.8),
+                child: Text((j + 1).toString().padLeft(2, '0')),
+              ),
             ),
           );
-
-          latList.add(templeLatLngState.templeLatLngMap[element]!.lat.toDouble());
-
-          lngList.add(templeLatLngState.templeLatLngMap[element]!.lng.toDouble());
 
           j++;
         }
       }
-
-      if (latList.isNotEmpty && lngList.isNotEmpty) {
-        minLat = latList.reduce(min);
-        maxLat = latList.reduce(max);
-        minLng = lngList.reduce(min);
-        maxLng = lngList.reduce(max);
-      }
     }
-  }
-
-  ///
-  void setDefaultBoundsMap() {
-    final LatLngBounds bounds = LatLngBounds.fromPoints(<LatLng>[LatLng(minLat, maxLng), LatLng(maxLat, minLng)]);
-
-    final CameraFit cameraFit =
-        CameraFit.bounds(bounds: bounds, padding: EdgeInsets.all(appParamState.currentPaddingIndex * 10));
-
-    mapController.fitCamera(cameraFit);
-
-    /// これは残しておく
-    // final LatLng newCenter = mapController.camera.center;
-
-    final double newZoom = mapController.camera.zoom;
-
-    setState(() => currentZoom = newZoom);
-
-    appParamNotifier.setCurrentZoom(zoom: newZoom);
-
-    getBoundsZoomValue = true;
   }
 }
