@@ -9,6 +9,8 @@ part 'app_param.g.dart';
 class AppParamState with _$AppParamState {
   const factory AppParamState({
     @Default('') String selectedDate,
+    @Default(0) double currentZoom,
+    @Default(5) int currentPaddingIndex,
   }) = _AppParamState;
 }
 
@@ -20,4 +22,7 @@ class AppParamController extends _$AppParamController {
 
   ///
   void setSelectedDate({required String date}) => state = state.copyWith(selectedDate: date);
+
+  ///
+  void setCurrentZoom({required double zoom}) => state = state.copyWith(currentZoom: zoom);
 }
