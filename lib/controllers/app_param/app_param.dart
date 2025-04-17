@@ -11,6 +11,7 @@ class AppParamState with _$AppParamState {
     @Default('') String selectedDate,
     @Default(0) double currentZoom,
     @Default(5) int currentPaddingIndex,
+    @Default(false) bool firstMapChange,
   }) = _AppParamState;
 }
 
@@ -25,4 +26,7 @@ class AppParamController extends _$AppParamController {
 
   ///
   void setCurrentZoom({required double zoom}) => state = state.copyWith(currentZoom: zoom);
+
+  ///
+  void setFirstMapChange({required bool flag}) => state = state.copyWith(firstMapChange: flag);
 }

@@ -19,6 +19,7 @@ mixin _$AppParamState {
   String get selectedDate => throw _privateConstructorUsedError;
   double get currentZoom => throw _privateConstructorUsedError;
   int get currentPaddingIndex => throw _privateConstructorUsedError;
+  bool get firstMapChange => throw _privateConstructorUsedError;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,11 @@ abstract class $AppParamStateCopyWith<$Res> {
           AppParamState value, $Res Function(AppParamState) then) =
       _$AppParamStateCopyWithImpl<$Res, AppParamState>;
   @useResult
-  $Res call({String selectedDate, double currentZoom, int currentPaddingIndex});
+  $Res call(
+      {String selectedDate,
+      double currentZoom,
+      int currentPaddingIndex,
+      bool firstMapChange});
 }
 
 /// @nodoc
@@ -54,6 +59,7 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
     Object? selectedDate = null,
     Object? currentZoom = null,
     Object? currentPaddingIndex = null,
+    Object? firstMapChange = null,
   }) {
     return _then(_value.copyWith(
       selectedDate: null == selectedDate
@@ -68,6 +74,10 @@ class _$AppParamStateCopyWithImpl<$Res, $Val extends AppParamState>
           ? _value.currentPaddingIndex
           : currentPaddingIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      firstMapChange: null == firstMapChange
+          ? _value.firstMapChange
+          : firstMapChange // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -80,7 +90,11 @@ abstract class _$$AppParamStateImplCopyWith<$Res>
       __$$AppParamStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String selectedDate, double currentZoom, int currentPaddingIndex});
+  $Res call(
+      {String selectedDate,
+      double currentZoom,
+      int currentPaddingIndex,
+      bool firstMapChange});
 }
 
 /// @nodoc
@@ -99,6 +113,7 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
     Object? selectedDate = null,
     Object? currentZoom = null,
     Object? currentPaddingIndex = null,
+    Object? firstMapChange = null,
   }) {
     return _then(_$AppParamStateImpl(
       selectedDate: null == selectedDate
@@ -113,6 +128,10 @@ class __$$AppParamStateImplCopyWithImpl<$Res>
           ? _value.currentPaddingIndex
           : currentPaddingIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      firstMapChange: null == firstMapChange
+          ? _value.firstMapChange
+          : firstMapChange // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -123,7 +142,8 @@ class _$AppParamStateImpl implements _AppParamState {
   const _$AppParamStateImpl(
       {this.selectedDate = '',
       this.currentZoom = 0,
-      this.currentPaddingIndex = 5});
+      this.currentPaddingIndex = 5,
+      this.firstMapChange = false});
 
   @override
   @JsonKey()
@@ -134,10 +154,13 @@ class _$AppParamStateImpl implements _AppParamState {
   @override
   @JsonKey()
   final int currentPaddingIndex;
+  @override
+  @JsonKey()
+  final bool firstMapChange;
 
   @override
   String toString() {
-    return 'AppParamState(selectedDate: $selectedDate, currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex)';
+    return 'AppParamState(selectedDate: $selectedDate, currentZoom: $currentZoom, currentPaddingIndex: $currentPaddingIndex, firstMapChange: $firstMapChange)';
   }
 
   @override
@@ -150,12 +173,14 @@ class _$AppParamStateImpl implements _AppParamState {
             (identical(other.currentZoom, currentZoom) ||
                 other.currentZoom == currentZoom) &&
             (identical(other.currentPaddingIndex, currentPaddingIndex) ||
-                other.currentPaddingIndex == currentPaddingIndex));
+                other.currentPaddingIndex == currentPaddingIndex) &&
+            (identical(other.firstMapChange, firstMapChange) ||
+                other.firstMapChange == firstMapChange));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, selectedDate, currentZoom, currentPaddingIndex);
+  int get hashCode => Object.hash(runtimeType, selectedDate, currentZoom,
+      currentPaddingIndex, firstMapChange);
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.
@@ -170,7 +195,8 @@ abstract class _AppParamState implements AppParamState {
   const factory _AppParamState(
       {final String selectedDate,
       final double currentZoom,
-      final int currentPaddingIndex}) = _$AppParamStateImpl;
+      final int currentPaddingIndex,
+      final bool firstMapChange}) = _$AppParamStateImpl;
 
   @override
   String get selectedDate;
@@ -178,6 +204,8 @@ abstract class _AppParamState implements AppParamState {
   double get currentZoom;
   @override
   int get currentPaddingIndex;
+  @override
+  bool get firstMapChange;
 
   /// Create a copy of AppParamState
   /// with the given fields replaced by the non-null parameter values.

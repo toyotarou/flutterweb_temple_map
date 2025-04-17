@@ -42,27 +42,20 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
 
   bool getBoundsZoomValue = false;
 
-  ///
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() => isLoading = true);
-
-      // ignore: always_specify_types
-      Future.delayed(const Duration(seconds: 2), () {
-        setDefaultBoundsMap();
-
-        setState(() => isLoading = false);
-      });
-    });
-  }
+  LatLng mapCenter = const LatLng(35.718532, 139.586639);
 
   ///
   @override
   Widget build(BuildContext context) {
     makeMarker();
+
+    if (appParamState.selectedDate != '' && !appParamState.firstMapChange) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        mapController.move(mapCenter, 13);
+
+        appParamNotifier.setFirstMapChange(flag: true);
+      });
+    }
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -71,30 +64,28 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(appParamState.selectedDate),
-            if (appParamState.selectedDate != '') ...<Widget>[
-              SizedBox(
-                height: context.screenSize.height * 0.5,
-                child: FlutterMap(
-                    mapController: mapController,
-                    options: MapOptions(
-                      initialCenter: const LatLng(35.718532, 139.586639),
-                      initialZoom: currentZoomEightTeen,
-                      onPositionChanged: (MapCamera position, bool isMoving) {
-                        if (isMoving) {
-                          appParamNotifier.setCurrentZoom(zoom: position.zoom);
-                        }
-                      },
+            SizedBox(
+              height: context.screenSize.height * 0.5,
+              child: FlutterMap(
+                  mapController: mapController,
+                  options: MapOptions(
+                    initialCenter: const LatLng(35.718532, 139.586639),
+                    initialZoom: currentZoomEightTeen,
+                    onPositionChanged: (MapCamera position, bool isMoving) {
+                      if (isMoving) {
+                        appParamNotifier.setCurrentZoom(zoom: position.zoom);
+                      }
+                    },
+                  ),
+                  children: <Widget>[
+                    TileLayer(
+                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      tileProvider: CachedTileProvider(),
+                      userAgentPackageName: 'com.example.app',
                     ),
-                    children: <Widget>[
-                      TileLayer(
-                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        tileProvider: CachedTileProvider(),
-                        userAgentPackageName: 'com.example.app',
-                      ),
-                      MarkerLayer(markers: markerList),
-                    ]),
-              )
-            ],
+                    MarkerLayer(markers: markerList),
+                  ]),
+            ),
             const SizedBox(height: 20),
             displayDateTemple(),
           ],
@@ -154,13 +145,19 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
       final List<String> templeList = <String>[dateData[0].temple];
 
       if (dateData[0].memo != '') {
-        dateData[0].memo.split('、').forEach((String element) {
-          templeList.add(element);
-        });
+        dateData[0].memo.split('、').forEach((String element) => templeList.add(element));
       }
 
+      int j = 0;
       for (final String element in templeList) {
         if (templeLatLngState.templeLatLngMap[element] != null) {
+          if (j == 0) {
+            mapCenter = LatLng(
+              templeLatLngState.templeLatLngMap[element]!.lat.toDouble(),
+              templeLatLngState.templeLatLngMap[element]!.lng.toDouble(),
+            );
+          }
+
           markerList.add(
             Marker(
               point: LatLng(
@@ -176,6 +173,8 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
           latList.add(templeLatLngState.templeLatLngMap[element]!.lat.toDouble());
 
           lngList.add(templeLatLngState.templeLatLngMap[element]!.lng.toDouble());
+
+          j++;
         }
       }
 
@@ -190,24 +189,6 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
 
   ///
   void setDefaultBoundsMap() {
-//    if (templeDataList.length > 1) {
-    // final List<double> stationLatList = <double>[];
-    // final List<double> stationLngList = <double>[];
-    //
-    // if (tokyoTrainState.selectTrainList.isNotEmpty) {
-    //   final TokyoTrainModel? map = widget.tokyoTrainIdMap[tokyoTrainState.selectTrainList[0]];
-    //
-    //   map?.station.forEach((TokyoStationModel element) {
-    //     stationLatList.add(element.lat.toDouble());
-    //     stationLngList.add(element.lng.toDouble());
-    //   });
-    //
-    //   minLat = stationLatList.reduce(min);
-    //   maxLat = stationLatList.reduce(max);
-    //   minLng = stationLngList.reduce(min);
-    //   maxLng = stationLngList.reduce(max);
-    // }
-
     final LatLngBounds bounds = LatLngBounds.fromPoints(<LatLng>[LatLng(minLat, maxLng), LatLng(maxLat, minLng)]);
 
     final CameraFit cameraFit =
@@ -226,5 +207,4 @@ class _TempleMapDisplayScreenState extends ConsumerState<TempleMapDisplayScreen>
 
     getBoundsZoomValue = true;
   }
-//  }
 }

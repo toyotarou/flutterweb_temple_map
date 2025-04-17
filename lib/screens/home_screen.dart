@@ -61,6 +61,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with ControllersMixin<H
       list.add(
         GestureDetector(
           onTap: () {
+            appParamNotifier.setFirstMapChange(flag: false);
+
             appParamNotifier.setSelectedDate(date: element.date.yyyymmdd);
           },
           child: Container(
